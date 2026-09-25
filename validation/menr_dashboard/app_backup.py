@@ -1,3 +1,4 @@
+import os
 import streamlit as st
 import numpy as np
 import pandas as pd
@@ -6,21 +7,52 @@ import plotly.graph_objects as go
 
 st.set_page_config(page_title="MENR Digital Twin", layout="wide")
 
-ACCENT = "#2F6B4F"
-ACCENT_LIGHT = "#E3EFE7"
-RED = "#B05C4A"
+BG = "#FFFFFF"
+SURFACE = "#F4F4F2"
+ACCENT = "#3FA796"
+ACCENT_DIM = "#A8D9CE"
+RED = "#C4543F"
+TEXT = "#1A1D1F"
+TEXT_DIM = "#5A5F63"
+BORDER = "#E2E2DF"
 
 st.markdown(f"""
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500&display=swap');
+
+.stApp {{ background-color: {BG}; }}
+html, body, [class*="css"] {{ font-family: 'Inter', sans-serif; }}
+
+p, span, li, label, .stMarkdown, [data-testid="stCaptionContainer"] {{ color: {TEXT_DIM} !important; }}
+h1, h2, h3, h4 {{ font-family: 'Space Grotesk', sans-serif; color: {TEXT} !important; }}
+h2, h3 {{ color: {ACCENT} !important; }}
+
 [data-testid="stMetric"] {{
-    background-color: {ACCENT_LIGHT};
-    border-radius: 10px;
-    padding: 14px 18px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    background-color: {SURFACE};
+    border: 1px solid {BORDER};
+    border-radius: 6px;
+    padding: 16px 20px;
 }}
-h1, h2, h3 {{ color: {ACCENT}; }}
+[data-testid="stMetricValue"] {{ font-family: 'IBM Plex Mono', monospace; color: {ACCENT} !important; }}
+[data-testid="stMetricLabel"] {{ color: {TEXT_DIM} !important; font-size: 13px; text-transform: uppercase; letter-spacing: 0.04em; }}
+
+[data-testid="stTabs"] button p {{ color: {TEXT_DIM} !important; font-family: 'Space Grotesk', sans-serif; }}
+[data-testid="stTabs"] button[aria-selected="true"] p {{ color: {ACCENT} !important; }}
+
+[data-testid="stDataFrame"] {{ background-color: {SURFACE} !important; }}
+[data-testid="stDataFrame"] * {{ color: {TEXT} !important; }}
+
+[data-baseweb="select"] * {{ color: {TEXT} !important; }}
+div[data-baseweb="tag"] {{ background-color: {ACCENT_DIM} !important; color: {TEXT} !important; }}
+
+hr {{ border-color: {BORDER}; }}
 </style>
 """, unsafe_allow_html=True)
+
+st.markdown(f"<p style='color:{ACCENT}; font-family:\"IBM Plex Mono\",monospace; font-size:13px; letter-spacing:0.08em; margin-bottom:4px;'>COMPUTATIONAL VALIDATION FRAMEWORK</p>", unsafe_allow_html=True)
+st.markdown(f"<h1 style='margin-top:0; margin-bottom:4px; font-size:42px; color:{TEXT};'>MENR</h1>", unsafe_allow_html=True)
+st.markdown(f"<p style='color:{TEXT_DIM}; font-size:16px; margin-top:0;'>Mechano-Epigenetic Nano-Rewriter — stiffness-triggered, two-wave epigenetic reprogramming, validated against 16,911 real TCGA patient-gene predictions</p>", unsafe_allow_html=True)
+st.markdown(f"<hr style='border-color:{BORDER}; margin-top:20px; margin-bottom:28px;'>", unsafe_allow_html=True)
 
 st.markdown("<h1 style='margin-bottom:0;'>MENR</h1>", unsafe_allow_html=True)
 st.markdown("<p style='color:#5a6b5a; font-size:18px; margin-top:0;'>Mechano-Epigenetic Nano-Rewriter - Computational Validation Dashboard</p>", unsafe_allow_html=True)
@@ -35,7 +67,7 @@ with tab1:
         "Pancreatic (PAAD)":        {"E0": 3.5, "k": 0.8,  "color": "#2F6B4F"},
         "Triple-neg Breast (TNBC)": {"E0": 9.0, "k": 0.35, "color": "#5B8C5A"},
         "Hepatocellular (LIHC)":    {"E0": 5.5, "k": 0.6,  "color": "#8FAE6E"},
-        "Lung Adeno (LUAD)":        {"E0": 5.5, "k": 0.6, "color": "#B05C4A"},  # reused from LIHC - no solid lung MRE pair found (stated limitation)
+        "Lung Adeno (LUAD)":        {"E0": 5.5, "k": 0.6,  "color": "#B05C4A"},  # reused from LIHC - no solid lung MRE pair found (stated limitation)
     }
 
     col1, col2 = st.columns([1, 2])
@@ -67,7 +99,7 @@ with tab1:
         fig.add_vrect(x0=10, x1=50, fillcolor="#B05C4A", opacity=0.08, line_width=0)
         fig.update_layout(
             xaxis_title="Tissue stiffness (kPa)", yaxis_title="Activation probability",
-            template="plotly_white", height=450, legend=dict(orientation="h", y=-0.2)
+            template="plotly_white", paper_bgcolor="#FFFFFF", plot_bgcolor="#FFFFFF", height=450, legend=dict(orientation="h", y=-0.2)
         )
         st.plotly_chart(fig, use_container_width=True)
 
@@ -120,22 +152,15 @@ with tab2:
                       annotation_text="40% relative-drop threshold")
         fig.add_vline(x=12, line_dash="dash", line_color="lightgray", annotation_text="Wave 2 onset")
         fig.update_layout(xaxis_title="Time (hours)", yaxis_title="Promoter methylation fraction",
-                           yaxis_range=[0, 1], template="plotly_white", height=450)
+                           yaxis_range=[0, 1], template="plotly_white", paper_bgcolor="#FFFFFF", plot_bgcolor="#FFFFFF", height=450)
         st.plotly_chart(fig, use_container_width=True)
 
 with tab3:
     st.subheader("Real patient-gene predictions (TCGA digital twin)")
 
-    uploaded = st.file_uploader("Upload digital_twin_results_v2.csv", type="csv")
-    df = None
-    if uploaded is not None:
-        df = pd.read_csv(uploaded)
-    else:
-        try:
-            df = pd.read_csv("../digital-twin/digital_twin_results_v2.csv")
-            st.caption("Loaded digital_twin_results_v2.csv from project folder.")
-        except FileNotFoundError:
-            st.warning("No results file found yet - upload digital_twin_results_v2.csv to explore real predictions.")
+    from embedded_data import load_data
+    df = load_data()
+    st.caption("Loaded digital_twin_results_v2.csv (embedded).")
 
     if df is not None:
         col1, col2, col3 = st.columns(3)
@@ -161,7 +186,7 @@ with tab3:
         fig = go.Figure()
         rates = filtered.groupby("cancer_type")["predicted_responsive"].mean() * 100
         fig.add_trace(go.Bar(x=rates.index, y=rates.values, marker_color=ACCENT))
-        fig.update_layout(yaxis_title="Responsive rate (%)", template="plotly_white", height=400)
+        fig.update_layout(yaxis_title="Responsive rate (%)", template="plotly_white", paper_bgcolor="#FFFFFF", plot_bgcolor="#FFFFFF", height=400)
         st.plotly_chart(fig, use_container_width=True)
 
         st.dataframe(filtered.head(200), use_container_width=True)
@@ -212,5 +237,5 @@ with tab4:
         fig.add_trace(go.Bar(x=["Baseline", "Adjusted"], y=[baseline_rate, new_rate],
                               marker_color=[ACCENT, RED if shift < 0 else ACCENT]))
         fig.update_layout(yaxis_title="Responsive rate among borderline patients (%)",
-                           template="plotly_white", height=450)
+                           template="plotly_white", paper_bgcolor="#FFFFFF", plot_bgcolor="#FFFFFF", height=450)
         st.plotly_chart(fig, use_container_width=True)

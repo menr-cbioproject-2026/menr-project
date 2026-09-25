@@ -1,0 +1,88 @@
+CANONICAL VALUES (from digital_twin.py):
+  PAAD_E0: 3.5
+  PAAD_k: 0.8
+  LIHC_E0: 5.5
+  LIHC_k: 0.6
+  TNBC_E0: 9.0
+  TNBC_k: 0.35
+  LUAD_E0: 5.5
+  LUAD_k: 0.6
+  kme: 0.15
+  kde: 0.4
+  time_window_hours: 48
+  recovery_fraction: 0.4
+
+============================================================
+SCANNING ALL .py FILES
+============================================================
+
+digital-twin/check_rassf1_apc_lihc.py:
+  time window (0, N): [('', '96', '')]
+
+digital-twin/check_rassf1_apc_luad.py:
+  time window (0, N): [('', '96', '')]
+
+digital-twin/check_rassf1_apc_paad.py:
+  time window (0, N): [('', '96', '')]
+
+digital-twin/check_rassf1_apc_tnbc.py:
+  time window (0, N): [('', '96', '')]
+
+digital-twin/digital_twin.py:
+  E0/k pairs: [('3.5', '0.8'), ('5.5', '0.6'), ('9.0', '0.35'), ('5.5', '0.6')]
+  time window (0, N): [('48', '', ''), ('', '48', '')]
+  recovery threshold: ['0.40']
+
+digital-twin/master_comparison.py:
+  time window (0, N): [('', '96', '')]
+
+digital-twin/patch_digital_twin.py:
+  time window (0, N): [('96', '', ''), ('', '96', ''), ('48', '', ''), ('', '48', '')]
+  recovery threshold: ['0.40', '0.40']
+
+final-outputs/generate_figures.py:
+  time window (0, N): [('', '48', '')]
+
+model-a-trigger/model_a.py:
+  E0/k pairs: [('3.5', '0.8'), ('5.5', '0.6'), ('9.0', '0.35'), ('5.5', '0.6')]
+  time window (0, N): [('', '25', ''), ('', '', '25')]
+
+model-b-kinetics/model_b.py:
+  time window (0, N): [('48', '', ''), ('', '48', ''), ('', '', '48'), ('', '', '48'), ('', '', '48')]
+  recovery threshold: ['0.40']
+
+validation/diagnose_curve.py:
+  time window (0, N): [('', '96', '')]
+
+validation/diagnose_v2.py:
+  time window (0, N): [('', '96', '')]
+
+validation/diagnose_v3.py:
+  time window (0, N): [('', '48', '')]
+
+validation/diagnose_v4.py:
+  time window (0, N): [('', '96', '')]
+
+validation/menr_dashboard/app.py:
+  E0/k pairs: [('3.5', '0.8'), ('9.0', '0.35'), ('5.5', '0.6'), ('5.5', '0.6')]
+  time window (0, N): [('', '60', ''), ('', '48', ''), ('', '48', '')]
+
+validation/menr_dashboard/app_backup.py:
+  E0/k pairs: [('3.5', '0.8'), ('9.0', '0.35'), ('5.5', '0.6'), ('5.5', '0.6')]
+  time window (0, N): [('', '60', ''), ('', '48', ''), ('', '48', '')]
+
+validation/sensitivity_analysis.py:
+  E0/k pairs: [('3.5', '0.8')]
+  time window (0, N): [('96', '', '')]
+
+validation/sensitivity_analysis_combined.py:
+  E0/k pairs: [('3.5', '0.8')]
+  time window (0, N): [('96', '', '')]
+
+validation/sensitivity_analysis_v2.py:
+  E0/k pairs: [('3.5', '0.8')]
+  time window (0, N): [('96', '', '')]
+
+validation/sensitivity_analysis_v3.py:
+  E0/k pairs: [('3.5', '0.8'), ('3.5', '0.8')]
+  time window (0, N): [('96', '', '')]

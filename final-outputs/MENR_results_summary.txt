@@ -1,0 +1,48 @@
+============================================================
+MENR PROJECT — KEY RESULTS SUMMARY
+============================================================
+
+TOTAL PREDICTIONS: 16,911
+OVERALL RESPONSIVE RATE: 15.1%
+
+--- Responsive rate by cancer type ---
+  LIHC: 24.0%
+  LUAD: 7.7%
+  PAAD: 7.7%
+  TNBC: 16.7%
+  NOTE: LUAD stiffness parameters (E0, k) reuse LIHC's calibration.
+  No lung-specific MRE tumor stiffness data was available in the
+  literature. LUAD results should be interpreted with this caveat.
+
+--- Responsive rate by gene ---
+  APC: 39.1%
+  BRCA1: 0.3%
+  BRCA2: 0.0%
+  CDKN2A: 35.1%
+  MLH1: 0.1%
+  RASSF1: 46.0%
+  SMAD4: 0.0%
+  TP53: 0.0%
+
+--- By silencing mechanism ---
+  epigenetic: 23.5%
+  genetic: 0.0%
+
+--- Mann-Whitney U (responsive vs non-responsive methylation) ---
+  LIHC: resp median=0.676, non-resp median=0.042, p=9.93e-309
+  TNBC: resp median=0.618, non-resp median=0.042, p=0.00e+00
+  LUAD: resp median=0.542, non-resp median=0.075, p=3.45e-178
+  PAAD: resp median=0.489, non-resp median=0.043, p=1.20e-64
+
+--- Independent replication (GSE54503, Columbia University) ---
+  RASSF1 median in 132 HCC samples: 0.504
+  TCGA LIHC RASSF1 median: 0.593
+  Directional agreement: YES
+
+--- Key finding ---
+  PAAD RASSF1 heavily-silenced median: 0.426
+  LIHC RASSF1 heavily-silenced median: 0.593
+  Shallower methylation in PAAD explains lower responsiveness
+  independent of stiffness-based eligibility.
+
+============================================================

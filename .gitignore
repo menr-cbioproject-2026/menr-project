@@ -1,0 +1,13 @@
+fix.py
+fix_b.py
+/model_a.py
+/model_b.py
+__pycache__/
+*.pyc
+.DS_Store
+*.png
+FINAL SUBMISSION DOCS/
+working docs/
+project notes.docx
+~$*
+data-acquisition/

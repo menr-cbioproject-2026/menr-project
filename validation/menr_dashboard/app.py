@@ -163,19 +163,10 @@ with tab3:
     if uploaded is not None:
         df = pd.read_csv(uploaded)
     else:
-        here = os.path.dirname(os.path.abspath(__file__))
-        candidates = [
-            os.path.join(here, "digital_twin_results_v2.csv"),
-            os.path.join(here, "..", "digital-twin", "digital_twin_results_v2.csv"),
-            os.path.join(here, "..", "..", "digital-twin", "digital_twin_results_v2.csv"),
-            os.path.join(here, "..", "..", "..", "digital-twin", "digital_twin_results_v2.csv"),
-            "digital_twin_results_v2.csv",
-            "digital-twin/digital_twin_results_v2.csv",
-        ]
         found = None
-        for c in candidates:
-            if os.path.exists(c):
-                found = c
+        for root, dirs, files in os.walk(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))):
+            dirs[:] = [d for d in dirs if not d.startswith('.') and d != '__pycache__']
+            if "digital_twin_results_v2.csv" in fil            if "digital_twin_s.path.join(root, "digital_twin_results_v2.csv")
                 break
         if found:
             df = pd.read_csv(found)

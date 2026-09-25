@@ -158,21 +158,9 @@ with tab2:
 with tab3:
     st.subheader("Real patient-gene predictions (TCGA digital twin)")
 
-    uploaded = st.file_uploader("Upload digital_twin_results_v2.csv", type="csv")
-    df = None
-    if uploaded is not None:
-        df = pd.read_csv(uploaded)
-    else:
-        found = None
-        for root, dirs, files in os.walk(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))):
-            dirs[:] = [d for d in dirs if not d.startswith('.') and d != '__pycache__']
-            if "digital_twin_results_v2.csv" in fil            if "digital_twin_s.path.join(root, "digital_twin_results_v2.csv")
-                break
-        if found:
-            df = pd.read_csv(found)
-            st.caption("Loaded digital_twin_results_v2.csv from project folder.")
-        else:
-            st.warning("No results file found yet - upload digital_twin_results_v2.csv to explore real predictions.")
+    from embedded_data import load_data
+    df = load_data()
+    st.caption("Loaded digital_twin_results_v2.csv (embedded).")
 
     if df is not None:
         col1, col2, col3 = st.columns(3)

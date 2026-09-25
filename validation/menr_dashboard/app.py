@@ -1,3 +1,4 @@
+import os
 import streamlit as st
 import numpy as np
 import pandas as pd
@@ -163,7 +164,7 @@ with tab3:
         df = pd.read_csv(uploaded)
     else:
         try:
-            df = pd.read_csv("../digital-twin/digital_twin_results_v2.csv")
+            df = pd.read_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "digital-twin", "digital_twin_results_v2.csv"))
             st.caption("Loaded digital_twin_results_v2.csv from project folder.")
         except FileNotFoundError:
             st.warning("No results file found yet - upload digital_twin_results_v2.csv to explore real predictions.")

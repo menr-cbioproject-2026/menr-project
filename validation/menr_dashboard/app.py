@@ -163,10 +163,24 @@ with tab3:
     if uploaded is not None:
         df = pd.read_csv(uploaded)
     else:
-        try:
-            df = pd.read_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "digital-twin", "digital_twin_results_v2.csv"))
+        here = os.path.dirname(os.path.abspath(__file__))
+        candidates = [
+            os.path.join(here, "digital_twin_results_v2.csv"),
+            os.path.join(here, "..", "digital-twin", "digital_twin_results_v2.csv"),
+            os.path.join(here, "..", "..", "digital-twin", "digital_twin_results_v2.csv"),
+            os.path.join(here, "..", "..", "..", "digital-twin", "digital_twin_results_v2.csv"),
+            "digital_twin_results_v2.csv",
+            "digital-twin/digital_twin_results_v2.csv",
+        ]
+        found = None
+        for c in candidates:
+            if os.path.exists(c):
+                found = c
+                break
+        if found:
+            df = pd.read_csv(found)
             st.caption("Loaded digital_twin_results_v2.csv from project folder.")
-        except FileNotFoundError:
+        else:
             st.warning("No results file found yet - upload digital_twin_results_v2.csv to explore real predictions.")
 
     if df is not None:
